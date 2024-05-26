@@ -12,7 +12,7 @@ clientesRouter.use(express.urlencoded({ extended: true }));
 clientesRouter.post('/',clientesController.create);
 clientesRouter.get('/:id',clientesController.getById);
 clientesRouter.delete('/:id',clientesController.delete);
-clientesRouter.patch('/:id',clientesController.patch);
+clientesRouter.put('/:id',clientesController.put);
 
 
 module.exports =  clientesRouter;

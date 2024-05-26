@@ -9,7 +9,7 @@ require('dotenv').config();
 async function consultaMySqL(query, values) {
 
 
-
+    
     // Use the configuration to connect to the MySQL database
 
     const connection = mysql.createConnection({
@@ -41,6 +41,8 @@ async function consultaMySqL(query, values) {
                 });
             });
             connection.end;
+            console.log("Se realizó el query: " + query + "\nDevolviendo " + results)
+            
             return results;
         } catch (error) {
             console.error('Error executing query:', error);
