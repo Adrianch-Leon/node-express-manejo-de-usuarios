@@ -12,7 +12,8 @@ clientesRouter.use(express.urlencoded({ extended: true }));
 clientesRouter.post('/',clientesController.create);
 clientesRouter.get('/:id',clientesController.getById);
 clientesRouter.delete('/:id',clientesController.delete);
-clientesRouter.put('/:id',clientesController.put);
+clientesRouter.put('/actualizar/:id',clientesController.put);
+clientesRouter.put('/login',clientesController.login);
 
 
 module.exports =  clientesRouter;

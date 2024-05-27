@@ -41,7 +41,7 @@ async function consultaMySqL(query, values) {
                 });
             });
             connection.end;
-            console.log("Se realizó el query: " + query + "\nDevolviendo " + results)
+            console.log("Se realizó el query: " + query + "\nDevolviendo: " + results)
             
             return results;
         } catch (error) {
