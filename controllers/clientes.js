@@ -54,13 +54,13 @@ class clientesController {
     }
 
     static async put(req,res) {
-        const {nombre, apellidos, usuario, contrasenna, email} = req.body;
+        const {nombre, apellido, usuario, contrasenna, email} = req.body;
         // Hash the password using Argon2
         const hashedPassword = await argon2.hash(contrasenna);
 
 
-        const query = "UPDATE clientes SET (nombre, apellido, usuario, contrasenna, email) VALUES (?, ?, ?, ?, ?) WHERE id =" +  req.params.id ;
-        const values = [nombre, apellidos, usuario, hashedPassword , email];
+        const query = "UPDATE clientes SET nombre = ?, apellido = ?, usuario = ?, contrasenna = ?, email = ? WHERE id =" +  req.params.id ;
+        const values = [nombre, apellido, usuario, hashedPassword , email];
 
 
         try {
