@@ -1,5 +1,6 @@
 const connectionMySql = require('../utils/utils.js');
 const argon2 = require('argon2');
+const User = require('../models/cliente.model.js')
 
 
 
@@ -8,8 +9,8 @@ class clientesController {
 
     //function to obtain a client by id
     static async getById(req, res) {
-        const query = "SELECT * FROM clientes WHERE id = " + req.params.id;
-        var values = null;
+        const query = "SELECT * FROM clientes WHERE id = ?" ;
+        var values = [req.params.id];
         try {
             const results = await connectionMySql.consultaMySqL(query, values);
             res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -96,7 +97,6 @@ class clientesController {
         }
 
 
-        console.log("se ejecuta el método delete");
     }
 
     //function to login a client
@@ -155,6 +155,17 @@ class clientesController {
 
 
     }
-}
 
+    //middleware to load a user
+    static async load (req, res, next, id) {
+    try {
+        const instanceofUser = new User();
+      const user = await instanceofUser.get(id);
+      req.locals = { user };
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+}
 module.exports = clientesController;
