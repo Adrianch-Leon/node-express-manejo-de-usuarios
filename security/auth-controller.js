@@ -5,7 +5,7 @@ const clientesController = require('../controllers/clientes.js')
 
 
 
-function crearJWT(user) {
+async function crearJWT(user) {
     // Generate a JWT token
     const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1h' });
     return token;
@@ -31,7 +31,6 @@ exports.login = async (req, res) => {
     // Verify the user's credentials
     const { usuario, contrasenna } = req.body;
 
-    console.log(usuario);
     //comprobar si el usuario existe
     var query = "SELECT * FROM clientes WHERE usuario = ?";
     var values = [usuario];
@@ -61,15 +60,16 @@ exports.login = async (req, res) => {
                 if (result instanceof Error) {
                     throw new Error(result.message);
                 }
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                var token = crearJWT(result[0])
-                res.end("Su usuario se ha logueado correctamente:" + token);
-                console.log(result[0]);
-                console.log(token);
+                
+                const token = await crearJWT(result[0]);
+                //res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.json({token});
+                
 
             } catch (error) {
                 res.writeHead(500, { 'Content-Type': 'text/html' });
                 res.end("An error ocurred: " + error);
+                return;
             }
 
         }
